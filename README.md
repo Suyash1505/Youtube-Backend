@@ -57,3 +57,9 @@ Step: 16 npm i cookie-parser cors
         step: 3 const asyncHandler = (func) => async () => {}
 
         next -> relatd to middlewear -> it is a flag that is pass by middlewear
+
+Step: 17 npm i mongoose-aggregate-paginate-v2
+    note: to unleash the true power of mongoose
+
+Step: 18 npm i bcrypt
+Step: 19 npm i jsonwebtoken
