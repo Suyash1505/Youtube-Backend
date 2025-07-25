@@ -46,3 +46,14 @@ Step: 14 Create a data base in DB folder
 Step: 15 Config of dotenv
     1. do it in index.js file -> src folder
     2. do it in package.json
+
+    Note: we use app.use() when we want to use middlewear or config setting
+
+Step: 16 npm i cookie-parser cors
+
+    Notes : How to create a higher order function
+        step: 1 const asyncHandler = () => {};
+        step: 2 const asyncHnadler = () => () => {};
+        step: 3 const asyncHandler = (func) => async () => {}
+
+        next -> relatd to middlewear -> it is a flag that is pass by middlewear
