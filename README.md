@@ -63,3 +63,5 @@ Step: 17 npm i mongoose-aggregate-paginate-v2
 
 Step: 18 npm i bcrypt
 Step: 19 npm i jsonwebtoken
+Step: 20 npm i cloudinary
+Step: 21 npm i multer
