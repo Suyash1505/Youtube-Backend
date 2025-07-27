@@ -14,4 +14,12 @@ app.use(express.urlencoded({extended: true, limit: capacity}));
 app.use(express.static("public"));
 app.use(cookieParser());
 
+
+// Router Import
+import userRouter from "./Routes/user.routes.js"
+
+// Routes Decleration
+app.use("/api/v1/users", userRouter);
+// http://localhose:8000/api/vi/users/reginster
+
 export default app;
