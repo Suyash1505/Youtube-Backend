@@ -9,6 +9,7 @@ const registerUser = asyncHandler ( async (req, res) => {
     // Step: 1 Get user details from frontend
     const { username, email, fullname, password } = req.body;
     console.log("Email : ", email);
+    
 
     // Step: 2 Validation - not empty
 
@@ -27,7 +28,7 @@ const registerUser = asyncHandler ( async (req, res) => {
     }
 
     // Step: 3 Check if user already exist - username, email
-    const existedUser = User.findOne({
+    const existedUser = await User.findOne({
         $or: [{ username }, { email }]
     })
 
@@ -36,8 +37,22 @@ const registerUser = asyncHandler ( async (req, res) => {
     }
 
     // Step: 4 Check for image Check for avatar
-    const avatarLocalPath = req.files?.avatar[0]?.path;
-    const coverImageLocalPath = req.files?.coverImage[0]?.path;
+    // const avatarLocalPath = req.files?.avatar[0]?.path; // Morden Way
+    // const coverImageLocalPath = req.files?.coverImage[0]?.path;
+
+    let avatarLocalPath;
+    if(req.files && Array.isArray(req.files.avatar)
+    && req.files.avatar.length > 0){
+        avatarLocalPath = req.files.avatar[0].path;
+    }
+
+    // // Classic Way
+    let coverImageLocalPath ;
+    if(req.files && Array.isArray(req.files.coverImage)
+    && req.files.coverImage.length > 0){
+        
+        coverImageLocalPath = req.files.coverImage[0].path;
+    }
 
     if(!avatarLocalPath){
         throw new ApiError(404, "Avatar file is required");
@@ -46,9 +61,12 @@ const registerUser = asyncHandler ( async (req, res) => {
     // Step: 5 Upload them cloudinary, avatar
     const avatar = await uploadOnCloudinary(avatarLocalPath);
     const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+    console.log("DEBUG req.files:", req.files);
+    console.log("DEBUG req.files?.avatar:", req.files?.avatar);
+    console.log("DEBUG avatarLocalPath:", req.files?.avatar?.[0]?.path);
 
     if(!avatar){
-        throw new ApiError(407, "Avater is required.")
+        throw new ApiError(407, "Avatar is required.")
     }
 
     // Step: 6 Create User object - create entry in db
