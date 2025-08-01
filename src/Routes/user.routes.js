@@ -1,8 +1,10 @@
 import { Router } from "express";
-import  registerUser  from "../Controllers/user.controllers.js"
+import { registerUser, loginUser, logoutUser } from "../Controllers/user.controllers.js";
 import { upload } from "../Middlewears/multer.middlewears.js";
+import { verifyJWT } from "../Middlewears/auth.middlewears.js";
 
-const router = Router()
+const router = Router();
+
 router.route("/register").post(
     upload.fields([
         {
@@ -14,6 +16,12 @@ router.route("/register").post(
             maxCount: 1
         }
     ]),
-    registerUser)
+    registerUser
+);
 
-export default router; 
+router.route("/login").post(loginUser);
+
+// Secured Route
+router.route("/logout").post(verifyJWT, logoutUser);
+
+export default router;
